@@ -1,0 +1,102 @@
+DATASET: ava
+DATADIR: data/ava/frames
+
+NUM_GPUS: 8
+LOG_PERIOD: 10
+
+MODEL:
+  NUM_CLASSES: 80
+  MODEL_NAME: resnet_video
+  BN_MOMENTUM: 0.9
+  BN_EPSILON: 1.0000001e-5
+  ALLOW_INPLACE_SUM: True
+  ALLOW_INPLACE_RELU: True
+  ALLOW_INPLACE_RESHAPE: True
+  MEMONGER: True
+
+  BN_INIT_GAMMA: 0.0
+  DEPTH: 50
+  VIDEO_ARC_CHOICE: 2
+
+  MULTI_LABEL: True
+  USE_AFFINE: True
+
+RESNETS:
+  NUM_GROUPS: 1  # ResNet: 1x; RESNETS: 32x
+  WIDTH_PER_GROUP: 64  # ResNet: 64d; RESNETS: 4d
+  TRANS_FUNC: bottleneck_transformation_3d # bottleneck_transformation, basic_transformation
+
+TRAIN:
+  DATA_TYPE: train
+  BATCH_SIZE: 16
+  EVAL_PERIOD: 8000
+  JITTER_SCALES: [256, 320]
+
+  COMPUTE_PRECISE_BN: False
+  CROP_SIZE: 224
+
+  VIDEO_LENGTH: 32
+  SAMPLE_RATE: 2
+  DROPOUT_RATE: 0.3
+  PARAMS_FILE: pretrained_weights/r50_k400_pretrained.pkl
+  DATASET_SIZE: 235
+  RESET_START_ITER: True
+
+TEST:
+  DATA_TYPE: val
+  BATCH_SIZE: 16
+  CROP_SIZE: 256
+  SCALE: 256
+
+  VIDEO_LENGTH: 32
+  SAMPLE_RATE: 2
+
+  DATASET_SIZE: 64
+
+SOLVER:
+  LR_POLICY: 'steps_with_relative_lrs' # 'step', 'steps_with_lrs', 'steps_with_relative_lrs', 'steps_with_decay'
+  BASE_LR: 0.04
+  STEP_SIZES: [100000, 20000, 20000]
+  LRS: [1, 0.1, 0.01, 0.001]
+  MAX_ITER: 140000
+
+  WEIGHT_DECAY: 0.000001
+  WEIGHT_DECAY_BN: 0.0
+  MOMENTUM: 0.9
+  NESTEROV: True
+  SCALE_MOMENTUM: True
+
+  WARMUP:
+    WARMUP_ON: True
+    WARMUP_START_LR: 0.01
+    WARMUP_END_ITER: 2000
+
+CHECKPOINT:
+  DIR: '.'
+  CHECKPOINT_PERIOD: 4000
+  CONVERT_MODEL: True
+
+NONLOCAL:
+  USE_ZERO_INIT_CONV: True
+  USE_BN: False
+  USE_AFFINE: True
+  CONV3_NONLOCAL: True
+  CONV4_NONLOCAL: True
+  USE_SCALE: True
+
+AVA:
+  ANNOTATION_DIR: data/ava/annotations
+  DETECTION_SCORE_THRESH_TRAIN: 0.9
+  DETECTION_SCORE_THRESH_EVAL: [0.85]
+  LFB_DETECTION_SCORE_THRESH: 0.9
+  TEST_MULTI_CROP: False
+  TEST_MULTI_CROP_SCALES: [224, 256, 320]
+
+LFB:
+  ENABLED: True
+  FBO_TYPE: 'max'
+  WRITE_LFB: True
+  LOAD_LFB: False
+  LOAD_LFB_PATH: ''
+  WINDOW_SIZE: 60
+  MODEL_PARAMS_FILE: '' # Set this to a baseline model's model weight.
