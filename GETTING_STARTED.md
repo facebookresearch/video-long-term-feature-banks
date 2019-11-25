@@ -81,7 +81,7 @@ multi-scale, 2-flip, and 3-crop testing.
 To use our predicted person boxes for experiments, please download ([train](https://dl.fbaipublicfiles.com/video-long-term-feature-banks/data/ava/annotations/ava_train_predicted_boxes.csv), [val](https://dl.fbaipublicfiles.com/video-long-term-feature-banks/data/ava/annotations/ava_val_predicted_boxes.csv), [test](https://dl.fbaipublicfiles.com/video-long-term-feature-banks/data/ava/annotations/ava_test_predicted_boxes.csv)) and put them in `data/ava/annotations/`.
 
 To train the person detector yourself, please use [Detectron](https://github.com/facebookresearch/Detectron)
-with [e2e_keypoint_rcnn_X-101-32x8d-FPN_s1x_ava.yaml](configs/e2e_keypoint_rcnn_X-101-32x8d-FPN_s1x_ava.yaml).
+with [e2e_keypoint_rcnn_X-101-32x8d-FPN_s1x_ava.yaml](configs/detectron/e2e_keypoint_rcnn_X-101-32x8d-FPN_s1x_ava.yaml).
 The model weight of our trained detector is available [[here]](https://dl.fbaipublicfiles.com/video-long-term-feature-banks/67091280/e2e_keypoint_rcnn_X-101-32x8d-FPN_s1x_ava.yaml.13_26_25.49ooxNS5/output/train/ava_train/generalized_rcnn/model_final.pkl).
 The model obtains 93.9 AP@50 on validation set.
 
