@@ -4,6 +4,10 @@ This document describes how we prepare AVA, EPIC-Kitchens, and Charades datasets
 
 **Note: After finishing the following steps, please verify that the images in `frames` are consistent with the "frame lists". Using frames at a different FPS or with a different resolution might result in different performance.**
 
+#### License
+All models, their output detections, and their output features available for download through this document are licensed under the
+[Creative Commons Attribution-ShareAlike 3.0 license](https://creativecommons.org/licenses/by-sa/3.0/).
+
 ### AVA
 We assume that the AVA dataset is placed at `data/ava` with the following structure.
 ```
